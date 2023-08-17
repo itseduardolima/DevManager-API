@@ -1,4 +1,11 @@
+import { Column, Entity, ObjectId, ObjectIdColumn } from "typeorm";
+
+@Entity()
 export class Category {
-  category_id: number;
+
+  @ObjectIdColumn()
+  category_id: ObjectId;
+
+  @Column()
   name: string;
 }
