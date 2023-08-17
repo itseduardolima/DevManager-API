@@ -22,7 +22,7 @@ export class ProjectService {
       .where('project.project_id = :id', { id })
       .getOne();
     if (!project) {
-      throw new NotFoundException('Id do registro inválido.');
+      throw new NotFoundException('Id inválido.');
     }
     return project;
   }
