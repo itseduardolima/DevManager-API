@@ -1,26 +1,50 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateServiceDto } from '../dto/create-service.dto';
 import { UpdateServiceDto } from '../dto/update-service.dto';
+import { Service } from '../entities/service.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ServicesService {
-  create(createServiceDto: CreateServiceDto) {
-    return 'This action adds a new service';
+  constructor(
+    @InjectRepository(Service)
+    private readonly serviceRepository: Repository<Service>,
+  ) {}
+
+  async findAll() {
+    return this.serviceRepository.find();
   }
 
-  findAll() {
-    return `This action returns all services`;
+  async getById(id: string) {
+    const service = await this.serviceRepository
+      .createQueryBuilder('service')
+      .where('service.service_id = :id', { id })
+      .getOne();
+    if (!service) {
+      throw new NotFoundException('Id inválido.');
+    }
+    return service;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} service`;
+  async create(createService: CreateServiceDto) {
+    const service = this.serviceRepository.create(createService);
+    return this.serviceRepository.save(service);
   }
 
-  update(id: number, updateServiceDto: UpdateServiceDto) {
-    return `This action updates a #${id} service`;
+  async update(id: string, updateServiceDto: UpdateServiceDto) {
+    const service = await this.getById(id);
+
+    if (!service) {
+      throw new NotFoundException('Id invalido!');
+    }
+
+    this.serviceRepository.merge(service, updateServiceDto);
+
+    return this.serviceRepository.save(service);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} service`;
+  async remove(id: string) {
+    await this.serviceRepository.delete(id);
   }
 }
