@@ -4,4 +4,5 @@ export class Project {
   budget: string;
   cost: number;
   category_id: number;
+  service_id: number;
 }
