@@ -6,6 +6,7 @@ import { ServicesModule } from './services/services.module';
 import { CategoryModule } from './category/category.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
