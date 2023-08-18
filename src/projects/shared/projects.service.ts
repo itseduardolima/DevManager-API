@@ -3,7 +3,8 @@ import { CreateProjectDto } from '../dto/create-project.dto';
 import { UpdateProjectDto } from '../dto/update-project.dto';
 import { Project } from '../entities/project.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import {  Repository } from 'typeorm';
+import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class ProjectService {
@@ -17,7 +18,9 @@ export class ProjectService {
   }
 
   async getById(id: string): Promise<Project> {
-    return await this.projectRepository.findOne({ where: { project_id: id } });
+    const objectId = new ObjectId(id);
+
+    return this.projectRepository.findOne({ where: { project_id: objectId } });
   }
 
   async create(createProjectDto: CreateProjectDto) {

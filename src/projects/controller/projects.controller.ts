@@ -25,7 +25,7 @@ export class ProjectsController {
 
   @Get(':id')
   async getById(@Param('id') id: string): Promise<Project> {
-    return await this.projectsService.getById(id);
+    return this.projectsService.getById(id);
   }
 
   @Post()
