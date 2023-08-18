@@ -11,7 +11,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mongodb',
-      url: 'mongodb://localhost/nestjs_crud_example',
+      url: 'mongodb://localhost:27017/devmanager',
       synchronize: true,
       useUnifiedTopology: true,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
