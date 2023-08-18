@@ -1,6 +1,7 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateCategoryDto } from './create-category.dto';
+import { OmitType, ApiProperty } from '@nestjs/swagger';
+import { Category } from '../entities/category.entity';
 
-export class UpdateCategoryDto extends PartialType(CreateCategoryDto) {
-    name: string;
+export class UpdateCategoryDto extends OmitType(Category, ['category_id']) {
+  @ApiProperty()
+  name: string;
 }

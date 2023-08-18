@@ -16,15 +16,8 @@ export class ProjectService {
     return this.projectRepository.find();
   }
 
-  async getById(id: string) {
-    const project = await this.projectRepository
-      .createQueryBuilder('project')
-      .where('project.project_id = :id', { id })
-      .getOne();
-    if (!project) {
-      throw new NotFoundException('Id inválido.');
-    }
-    return project;
+  async getById(id: string): Promise<Project> {
+    return await this.projectRepository.findOne({ where: { project_id: id } });
   }
 
   async create(createProjectDto: CreateProjectDto) {

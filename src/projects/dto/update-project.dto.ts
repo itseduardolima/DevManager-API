@@ -1,14 +1,19 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateProjectDto } from './create-project.dto';
+import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { Project } from '../entities/project.entity';
 
-export class UpdateProjectDto extends PartialType(CreateProjectDto) {
+export class UpdateProjectDto extends OmitType(Project, ['project_id']) {
+  @ApiProperty()
   name: string;
 
+  @ApiProperty()
   budget: string;
 
+  @ApiProperty()
   cost: number;
 
+  @ApiProperty()
   category_id: number;
 
+  @ApiProperty()
   service_id: number;
 }
